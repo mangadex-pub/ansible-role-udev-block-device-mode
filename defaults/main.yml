@@ -1,0 +1,4 @@
+# udev_rule_order: "50"
+# udev_rule_device: "sdb"
+# udev_rule_mode: "0666"
+# udev_rule_comment: "Set permissions of device to allow RW from Docker container's non-root user"

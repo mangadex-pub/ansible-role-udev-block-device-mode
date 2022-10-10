@@ -1,0 +1,33 @@
+- name: Check for device existence
+  ansible.builtin.stat:
+    path: "/dev/{{ udev_rule_device }}"
+  register: device_file_pre
+
+- name: Assert device exists and is block device
+  ansible.builtin.assert:
+    that: device_file_pre.stat.exists and device_file_pre.stat.isblk
+
+- name: "Install udev rule to set {{ udev_rule_device }} mode to {{ udev_rule_mode }}"
+  ansible.builtin.template:
+    src: "block-device-mode.rules.j2"
+    dest: "/etc/udev/rules.d/{{ udev_rule_order }}-blk-mode-{{ udev_rule_device | basename }}.rules"
+    force: true
+    owner: root
+    group: root
+    mode: 0644
+  notify: Trigger udevadm reload
+
+# Need to flush synchronously to avoid awkward handler juggling
+# And it is at risk of breaking other
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Retrieve device file info
+  ansible.builtin.stat:
+    path: "{{ udev_rule_device }}"
+  register: device_file_post
+
+- name: Assert udev rule applied correctly
+  ansible.builtin.assert:
+    that: device_file_post.stat.mode == udev_rule_mode
+    fail_msg: "Wanted {{ udev_rule_device }} with mode {{ udev_rule_mode }} but was {{ device_file_post.stat.mode }}!"

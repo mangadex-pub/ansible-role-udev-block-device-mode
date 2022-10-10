@@ -1,0 +1,4 @@
+# {{ ansible_managed }} by role {{ role_name }}
+#
+# {{ udev_rule_comment }}
+SUBSYSTEM=="block", KERNEL=="{{ udev_rule_device | basename }}", MODE="{{ udev_rule_mode }}"

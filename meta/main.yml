@@ -1,0 +1,17 @@
+dependencies: []
+
+galaxy_info:
+  role_name: udev_block_device_mode
+  author: mangadex
+  description: Persistently set permissions of a given block device using udev
+  license: "license (MIT)"
+  min_ansible_version: "5.0"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+        - jammy
+  galaxy_tags:
+    - system
+    - udev
