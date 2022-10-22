@@ -24,7 +24,7 @@
 
 - name: Retrieve device file info
   ansible.builtin.stat:
-    path: "{{ udev_rule_device }}"
+    path: "/dev/{{ udev_rule_device }}"
   register: device_file_post
 
 - name: Assert udev rule applied correctly
