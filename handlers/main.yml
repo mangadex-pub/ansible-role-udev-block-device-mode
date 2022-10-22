@@ -1,4 +1,4 @@
 - name: Trigger udevadm reload
   ansible.builtin.command:
-    cmd: "udevadm trigger --verbose {{ udev_rule_device }}"
+    cmd: "udevadm trigger --verbose /dev/{{ udev_rule_device }}"
   changed_when: true

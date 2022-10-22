@@ -7,10 +7,10 @@
   ansible.builtin.assert:
     that: device_file_pre.stat.exists and device_file_pre.stat.isblk
 
-- name: "Install udev rule to set {{ udev_rule_device }} mode to {{ udev_rule_mode }}"
+- name: "Install udev rule to set /dev/{{ udev_rule_device }} mode to {{ udev_rule_mode }}"
   ansible.builtin.template:
     src: "block-device-mode.rules.j2"
-    dest: "/etc/udev/rules.d/{{ udev_rule_order }}-blk-mode-{{ udev_rule_device | basename }}.rules"
+    dest: "/etc/udev/rules.d/{{ udev_rule_order }}-blk-mode-{{ udev_rule_device }}.rules"
     force: true
     owner: root
     group: root
